@@ -8,10 +8,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Main {
     public static void main(String[] args) {
 
-        System.out.println("Hello!");
+        System.out.println("Hello there!");
         //ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        ApplicationContext context = new AnnotationConfigApplicationContext(PaymentGatewayConfig.class);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(PaymentGatewayConfig.class);
         PaymentGateWay gateWay = context.getBean("razorpayObj", RazorpayPaymentGateway.class);
         gateWay.makePayment();
+        context.close();
     }
 }
