@@ -130,3 +130,45 @@ from which the literal values should be picked and injected.
 - If there are more than one implementation classes for an _interface_, **@Primary** annotation can be used to 
 always select the one whose bean we want to create. Alternatively, **@Qualifier** annotation can be used to
 select the implementation class object
+
+**@PostConstruct**
+- If we want to call any method immediately automatically after a bean creation
+- Marking a method with **@PostConstruct** also makes the method an _**init**_ method!
+```java
+@PostConstruct
+public void init() {
+    methodCalledAfterObjectCreation();
+}
+
+public void methodCalledAfterObjectCreation() {
+    System.out.println("Post bean construct method methodCalledAfterObjectCreation has been called");
+}
+```
+-Gradle dependency
+```groovy
+implementation 'javax.annotation:javax.annotation-api:1.3.2'
+```
+**@PreDestroy**
+- A method marked @PreDestroy is called just before the bean gets destroyed/removed from
+the IOC container.
+- We can do something like close db connection in it;
+
+```java
+    @PreDestroy
+    public void methodCalledJustBeforeTheBeanIsDestroyed() {
+        System.out.println("Pre Destroy method methodCalledJustBeforeTheBeanIsDestroyed has been called");
+    }
+```
+
+- In a standalone EE app, it is a developer's responsibility to create and close the context
+```java
+context.close();
+```
+or
+```java
+context.registerShutDownHook();
+```
+- The only difference is that *context.registerShutDownHook();* is automatically executed as the last line i.e when the 
+_**main**_ thread ends . While *context.close();* is executed immediately.
+
+- In web app, Spring framework automatically takes cares of creation and closing the context.
