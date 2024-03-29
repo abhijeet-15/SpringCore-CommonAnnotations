@@ -20,3 +20,21 @@ Add the below in *beans.xml*:
  <context:component-scan base-package="com.abhijeetsingh" />
 ```
 
+- To define the base package using Java and not XML, create a configuration class.
+- In this class, use the annotation **@Configuration** and **@ComponentScan(base package)
+```java
+package com.abhijeetsingh.config;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ComponentScan(basePackages = "com.abhijeetsingh")
+public class PaymentGatewayConfig {
+}
+```
+- Update the Client class to use:
+```java
+//ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        ApplicationContext context = new AnnotationConfigApplicationContext(PaymentGatewayConfig.class);
+```
